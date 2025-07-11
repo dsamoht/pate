@@ -19,7 +19,7 @@ process DADA2 {
     script:
     """
     #!/usr/bin/env Rscript
-    suppressPackageStartupMessages(library(dada2))
+    library(dada2)
 
     figaro_out = readLines("${figaroOutput}")
     parameters = c("truncLen_fwd", "truncLen_rev", "ee_fwd", "ee_rev")

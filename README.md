@@ -1,31 +1,18 @@
-# Automation of Amplicon Data Treatment for Microbial Ecology
-## Introduction
-A Nextflow pipeline automating metabarcoding data treatment from __raw__ Illumina paired reads to __ASVs__
-> *__Note__* : Input reads must have these characteristics:
-> - Demultiplexed
-> - Typical Illumina file name (i.e. \*_L001_R{1,2}_001.fastq.gz)  
-> - Reads of the same orientation (forward / reverse) must all have the same length
+# __<ins>Pâté</ins>__ : <ins>P</ins>ipeline for <ins>A</ins>mplicon data <ins>T</ins>reatment in microbial <ins>E</ins>cology
+> [!NOTE]
+Each amplicon type has its own considerations. Their treatment must follow similar but different strategies. __Pâté__ now supports the following amplicons:  
+:white_check_mark: __16S__  
+:white_check_mark: __16S18S__ (universal primers)  
+:white_check_mark: __18S__    
+:white_check_mark: __ITS__  
 
-## Dependencies
-- __Software :__  
-  [Nextflow](https://www.nextflow.io/)  
-  [Docker](https://www.docker.com/) and/or [Apptainer/Singularity](https://apptainer.org/)  
+## TL;DR
+```
+nextflow pull dsamoth/pate  
+nextflow run dsamoth/pate -profile docker --input samplesheet.csv --output pate_out
+```
 
-- (TODO) __A DADA2-formatted taxonomy database :__  
-[SILVA]()  
-[UNITE]()  
-[PR2]()  
-...TODO
-- __Edit__ *nextflow.config* :  
-  ```
-  TODO    
-  ```
-## How to run the pipeline
-__This command will test the setup and download the containers for off-line use__:  
-```
-nextflow run metabarcoding-wf.nf -profile {docker,singularity},local,test
-```
-__Run on your data__:  
-```
-nextflow run metabarcoding-wf.nf -profile {docker,singularity},{local,hpc} --input /path/to/fastq/files/ --output /path/to/output/ --amplicon_length [AMPLICONLENGTH] --fwd_primer_length [FWDPRIMERLENGTH] --rev_primer_length [REVPRIMERLENGTH]
-```
+## Usage
+### Dependencies
+  - [Nextflow](https://www.nextflow.io/)  
+  - [Docker](https://www.docker.com/) or [Apptainer/Singularity](https://apptainer.org/)  

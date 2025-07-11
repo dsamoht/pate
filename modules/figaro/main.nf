@@ -6,17 +6,19 @@ process FIGARO {
         container = params.figaro_docker
     }
 
-    publishDir "${params.output}/figaro", mode: 'copy'
+    publishDir "${params.output}/figaro", mode: 'copy', pattern: "*filterAndTrimParameters.txt"
 
     input:
-    path inputDir
+    tuple val(meta), path(reads, stageAs: "figaro_input/*")
 
     output:
-    path "filterAndTrimParameters.txt", emit: figaro_out
+    tuple val(meta), path("*filterAndTrimParameters.txt")
 
     script:
+    def length = meta.figaro_length[0]
+    def run_id = meta.run_id[0]
     def python_cmd = """import json
-    with open('${inputDir}_figaro_out/trimParameters.json') as json_file:
+    with open('figaro_out/trimParameters.json') as json_file:
         data = json.load(json_file)
     print(data[0]['trimPosition'][0])
     print(data[0]['trimPosition'][1])
@@ -24,8 +26,8 @@ process FIGARO {
     print(data[0]['maxExpectedError'][1])
     """
     """
-    figaro.py -a ${params.amplicon_length} -f ${params.fwd_primer_length} -r ${params.rev_primer_length} -i ${inputDir} -o ${inputDir}_figaro_out -m 10
-    python -c "${python_cmd}" > filterAndTrimParameters.txt
+    figaro.py -a ${length} -f 1 -r 1 -i figaro_input -o figaro_out
+    python -c "${python_cmd}" > ${run_id}_filterAndTrimParameters.txt
     """
 
 }
