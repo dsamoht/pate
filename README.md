@@ -1,4 +1,4 @@
-# __<ins>pâté</ins>__ : <ins>P</ins>ipeline for <ins>A</ins>mplicon data <ins>T</ins>reatment in microbial <ins>E</ins>cology
+# __pâté__ : <ins>P</ins>ipeline for <ins>A</ins>mplicon data <ins>T</ins>reatment in microbial <ins>E</ins>cology
 > [!NOTE]
 Each amplicon type has its own considerations. Their treatment must follow similar but different strategies. __Pâté__ now supports the following amplicons:  
 :white_check_mark: __16S__  
