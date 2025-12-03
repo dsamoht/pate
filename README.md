@@ -1,4 +1,5 @@
-# __pâté__ : Pipeline for Amplicon data Treatment in microbial Ecology
+# __pâté__  
+## Pipeline for Amplicon data Treatment in microbial Ecology
 > [!NOTE]
 Each amplicon type has its own considerations. Their treatment must follow similar but different strategies. __Pâté__ now supports the following amplicons:  
 :white_check_mark: __16S__  
