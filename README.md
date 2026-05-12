@@ -1,7 +1,7 @@
-# __pâté__  
+# __pate__  
 ## Pipeline for Amplicon data Treatment in microbial Ecology
 > [!NOTE]
-Each amplicon type has its own considerations. Their treatment must follow similar but different strategies. __Pâté__ now supports the following amplicons:  
+Each amplicon type has its own considerations. Their treatment must follow similar but different strategies. __pate__ now supports the following amplicons:  
 :white_check_mark: __16S__  
 :white_check_mark: __16S18S__ (universal primers)  
 :white_check_mark: __18S__    
