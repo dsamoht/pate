@@ -1,10 +1,8 @@
 process FIGARO {
 
-    if (workflow.containerEngine == 'singularity') {
-        container = params.figaro_singularity
-    } else {
-        container = params.figaro_docker
-    }
+    tag meta.run_id[0]
+
+    container params.figaro_container
 
     publishDir "${params.output}/figaro", mode: 'copy', pattern: "*filterAndTrimParameters.txt"
 

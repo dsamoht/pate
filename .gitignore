@@ -2,3 +2,4 @@
 *work/
 .nextflow
 *test_res/*
+test_output

@@ -1,10 +1,8 @@
 process SEQTK_RC {
+
+    tag meta.sample_name
   
-    if (workflow.containerEngine == 'singularity') {
-        container = params.seqtk_singularity
-    } else {
-        container = params.seqtk_docker
-    }
+    container params.seqtk_container
 
     input:
     tuple val(meta), path(reads)

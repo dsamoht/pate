@@ -1,13 +1,35 @@
 report_header_info:
-  - Application: "Pâté : Pipeline for Amplicon data Treatment in microbial Ecology"
-
-title: "Pâté : Pipeline for Amplicon data Treatment in microbial Ecology"
+title: "pate : Pipeline for Amplicon data Treatment in microbial Ecology"
 subtitle: ""
-
-show_analysis_paths: False
-show_analysis_time: False
-
+show_analysis_paths: false
+show_analysis_time: false
 skip_generalstats: true
+
+module_order:
+  - fastqc:
+      name: 'raw reads - forward (R1)'
+      path_filters:
+        - '*_raw_R1_fastqc.zip'
+  - fastqc:
+      name: 'raw reads - reverse (R2)'
+      path_filters:
+        - '*_raw_R2_fastqc.zip'
+  - fastqc:
+      name: 'post cutadapt - forward (R1)'
+      path_filters:
+        - '*_trimmed_R1_fastqc.zip'
+  - fastqc:
+      name: 'post cutadapt - reverse (R2)'
+      path_filters:
+        - '*_trimmed_R2_fastqc.zip'
+  - fastqc:
+      name: 'post filterAndTrim - forward (R1)'
+      path_filters:
+        - '*_filtered_R1_fastqc.zip'
+  - fastqc:
+      name: 'post filterAndTrim - reverse (R2)'
+      path_filters:
+        - '*_filtered_R2_fastqc.zip'
 
 remove_sections:
   - fastqc_per_base_sequence_content
@@ -16,20 +38,75 @@ remove_sections:
   - fastqc_top_overrepresented_sequences
   - fastqc_sequence_duplication_levels
   - fastqc_per_base_n_content
+  - fastqc_sequence_length_distribution
   - fastqc_overrepresented_sequences
-
+  - fastqc_per_sequence_gc_content
+  - fastqc_per_sequence_quality_scores
+  - fastqc-1_fastqc-1_per_base_sequence_content
+  - fastqc-1_fastqc_status_checks
+  - fastqc-1_fastqc_adapter_content
+  - fastqc-1_fastqc_top_overrepresented_sequences
+  - fastqc-1_fastqc_sequence_duplication_levels
+  - fastqc-1_fastqc_per_base_n_content
+  - fastqc-1_fastqc_overrepresented_sequences
+  - fastqc-1_fastqc_per_sequence_gc_content
+  - fastqc-1_fastqc_per_sequence_quality_scores
+  - fastqc-1_fastqc_sequence_length_distribution
+  - fastqc-2_fastqc-2_per_base_sequence_content
+  - fastqc-2_fastqc_sequence_length_distribution
+  - fastqc-2_fastqc_status_checks
+  - fastqc-2_fastqc_adapter_content
+  - fastqc-2_fastqc_top_overrepresented_sequences
+  - fastqc-2_fastqc_sequence_duplication_levels
+  - fastqc-2_fastqc_per_base_n_content
+  - fastqc-2_fastqc_overrepresented_sequences
+  - fastqc-2_fastqc_per_sequence_gc_content
+  - fastqc-2_fastqc_per_sequence_quality_scores
+  - fastqc-3_fastqc-3_per_base_sequence_content
+  - fastqc-3_fastqc_sequence_length_distribution
+  - fastqc-3_fastqc_status_checks
+  - fastqc-3_fastqc_adapter_content
+  - fastqc-3_fastqc_top_overrepresented_sequences
+  - fastqc-3_fastqc_sequence_duplication_levels
+  - fastqc-3_fastqc_per_base_n_content
+  - fastqc-3_fastqc_overrepresented_sequences
+  - fastqc-3_fastqc_per_sequence_gc_content
+  - fastqc-3_fastqc_per_sequence_quality_scores
+  - fastqc-4_fastqc-4_per_base_sequence_content
+  - fastqc-4_fastqc_sequence_length_distribution
+  - fastqc-4_fastqc_per_base_sequence_content
+  - fastqc-4_fastqc_status_checks
+  - fastqc-4_fastqc_adapter_content
+  - fastqc-4_fastqc_top_overrepresented_sequences
+  - fastqc-4_fastqc_sequence_duplication_levels
+  - fastqc-4_fastqc_per_base_n_content
+  - fastqc-4_fastqc_overrepresented_sequences
+  - fastqc-4_fastqc_per_sequence_gc_content
+  - fastqc-4_fastqc_per_sequence_quality_scores
+  - fastqc-5_fastqc_per_sequence_quality_scores
+  - fastqc-5_fastqc-5_per_base_sequence_content
+  - fastqc-5_fastqc_per_sequence_gc_content
+  - fastqc-5_fastqc_per_base_n_content
+  - fastqc-5_fastqc_sequence_length_distribution
+  - fastqc-5_fastqc_sequence_duplication_levels
+  - fastqc-5_fastqc_overrepresented_sequences
+  - fastqc-5_fastqc_top_overrepresented_sequences
+  - fastqc-5_fastqc_adapter_content
+  - fastqc-5_fastqc_status_checks
+  - "cutadapt_trimmed_sequences_3"
+  - "cutadapt_trimmed_sequences_5"
 
 custom_plot_config:
   fastqc_sequence_counts_plot:
-    cpswitch_c_active: False
+    cpswitch_c_active: false
 
 disable_version_detection: true
 
-software_versions:
-  fastqc: "0.12.1"
-  kraken: "2.1.3"
-  krakentools: "1.2"
-  multiqc: "1.22.2"
-
-top_modules:
-  - fastqc
+fn_clean_exts:
+  - ".gz"
+  - ".fastq"
+  - "_raw_"
+  - "_trimmed_"
+  - "_filtered_"
+  - "_S1_L001_"
+  - "_S1_filtered_"

@@ -8,10 +8,10 @@ for (i in seq_along(figaro_out)) {
     assign(parameters[i], as.integer(figaro_out[i]))
 }
 
-fnFs <- sort(list.files("cutadapted", pattern="_L001_R1_001.fastq", full.names = TRUE))
-fnRs <- sort(list.files("cutadapted", pattern="_L001_R2_001.fastq", full.names = TRUE))
+fnFs <- sort(list.files("cutadapted", pattern="_S1_L001_R1_001.fastq", full.names = TRUE))
+fnRs <- sort(list.files("cutadapted", pattern="_S1_L001_R2_001.fastq", full.names = TRUE))
 
-sample_names <- sapply(strsplit(sub("^trimmed_", "", basename(fnFs)), "_L001_"), `[`, 1)
+sample_names <- sapply(strsplit(sub("^trimmed_", "", basename(fnFs)), "_S1_L001_"), `[`, 1)
 
 filtFs <- file.path(".", "filtered_and_trimmed", paste0(sample_names, "_F_filt.fastq.gz"))
 filtRs <- file.path(".", "filtered_and_trimmed", paste0(sample_names, "_R_filt.fastq.gz"))

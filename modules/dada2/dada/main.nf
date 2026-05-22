@@ -1,10 +1,8 @@
 process DADA2_DADA {
+
+    tag meta.dada2_run_id
   
-    if (workflow.containerEngine == 'singularity') {
-        container = params.dada2_singularity
-    } else {
-        container = params.dada2_docker
-    }
+    container params.dada2_container
 
     publishDir "${params.output}/dada2", mode: 'copy'
 

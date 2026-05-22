@@ -1,11 +1,9 @@
 process DADA2_FILTERANDTRIM {
-  
-    if (workflow.containerEngine == 'singularity') {
-        container = params.dada2_singularity
-    } else {
-        container = params.dada2_docker
-    }
 
+    tag meta.dada2_run_id
+  
+    container params.dada2_container
+ 
     publishDir "${params.output}/dada2", mode: 'copy'
 
     input:

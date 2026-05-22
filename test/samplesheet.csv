@@ -1,0 +1,16 @@
+﻿sample_name,run_id,forward_reads,reverse_reads,reads_length,amplicon,amplicon_length,forward_primer,reverse_primer
+sample_a,run_1,./test/fastq/sample_a_S1_L001_R1_001.fastq.gz,./test/fastq/sample_a_S1_L001_R2_001.fastq.gz,250,16S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_b,run_1,./test/fastq/sample_b_S1_L001_R1_001.fastq.gz,./test/fastq/sample_b_S1_L001_R2_001.fastq.gz,250,16S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_c,run_1,./test/fastq/sample_c_S1_L001_R1_001.fastq.gz,./test/fastq/sample_c_S1_L001_R2_001.fastq.gz,250,16S18S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_d,run_1,./test/fastq/sample_d_S1_L001_R1_001.fastq.gz,./test/fastq/sample_d_S1_L001_R2_001.fastq.gz,250,16S18S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_e,run_1,./test/fastq/sample_e_S1_L001_R1_001.fastq.gz,./test/fastq/sample_e_S1_L001_R2_001.fastq.gz,250,16S18S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_f,run_1,./test/fastq/sample_f_S1_L001_R1_001.fastq.gz,./test/fastq/sample_f_S1_L001_R2_001.fastq.gz,250,16S18S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_g,run_2,./test/fastq/sample_g_S1_L001_R1_001.fastq.gz,./test/fastq/sample_g_S1_L001_R2_001.fastq.gz,250,16S18S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_h,run_2,./test/fastq/sample_h_S1_L001_R1_001.fastq.gz,./test/fastq/sample_h_S1_L001_R2_001.fastq.gz,250,16S18S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_i,run_2,./test/fastq/sample_i_S1_L001_R1_001.fastq.gz,./test/fastq/sample_i_S1_L001_R2_001.fastq.gz,250,16S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_j,run_1,./test/fastq/sample_j_S1_L001_R1_001.fastq.gz,./test/fastq/sample_j_S1_L001_R2_001.fastq.gz,250,16S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_k,run_1,./test/fastq/sample_k_S1_L001_R1_001.fastq.gz,./test/fastq/sample_k_S1_L001_R2_001.fastq.gz,250,16S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_l,run_1,./test/fastq/sample_l_S1_L001_R1_001.fastq.gz,./test/fastq/sample_l_S1_L001_R2_001.fastq.gz,250,16S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_m,run_1,./test/fastq/sample_m_S1_L001_R1_001.fastq.gz,./test/fastq/sample_m_S1_L001_R2_001.fastq.gz,250,16S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_n,run_1,./test/fastq/sample_n_S1_L001_R1_001.fastq.gz,./test/fastq/sample_n_S1_L001_R2_001.fastq.gz,250,16S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT
+sample_o,run_1,./test/fastq/sample_o_S1_L001_R1_001.fastq.gz,./test/fastq/sample_o_S1_L001_R2_001.fastq.gz,250,16S,380,GTGYCAGCMGCCGCGGTAA,CCGYCAATTYMTTTRAGTTT

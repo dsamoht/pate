@@ -1,30 +1,38 @@
 #!/usr/bin/env nextflow
 
 include { CUTADAPT                 } from './modules/cutadapt'
-include { DADA2                    } from './modules/dada2'
-include { DADA2_FILTERANDTRIM      } from './modules/dada2/filterAndTrim'
 include { DISPATCH                 } from './workflows/dispatch'
-include { FASTQC                   } from './modules/fastqc'
+include { FASTQC as FASTQC_RAW     } from './modules/fastqc'
+include { FASTQC as FASTQC_TRIMMED } from './modules/fastqc'
 include { FIGARO                   } from './modules/figaro'
-include { FILTER_MAGICBLAST_OUTPUT } from './modules/magicblast/filter_magicblast_output'
-include { KRAKEN                   } from './modules/kraken'
-include { KRAKENTOOLS              } from './modules/krakentools'
-include { MAGICBLAST               } from './modules/magicblast/magicblast'
-include { MAKEBLASTDB              } from './modules/magicblast/makedb'
+include { MULTIQC                  } from './modules/multiqc'
 include { SEQTK_RC                 } from './modules/seqtk/rc'
 include { WF_16S                   } from './workflows/wf_16S'
 
 
-workflow METABARCODING_WF {
+workflow PATE {
 
     if (params.input == ""){
-        exit 1, "Enter a valid sample sheet (--input /path/to/sample_sheet.tsv)."
+        exit 1, "Enter a valid sample sheet (--input /path/to/samplesheet.csv)."
     }
     if (params.output == ""){
         exit 1, "Enter a valid output directory (--output /path/to/output)."
     }
 
     ch_input = DISPATCH()
+
+    ch_raw_for_fastqc = ch_input.flatMap { meta, reads ->
+        [
+            [ meta, reads[0], 'R1' ],
+            [ meta, reads[1], 'R2' ]
+        ]
+    }
+    ch_fastqc_raw = FASTQC_RAW(ch_raw_for_fastqc, 'raw')
+    
+    // - Gather FastQC zips for multiQC reporting
+    ch_fastqc_raw_zips = ch_fastqc_raw.zips.map { meta, zip -> 
+        return [ meta.dada2_run_id, zip ]
+    }
 
     // - Get the reverse-complement of the forward and reverse primers
     ch_seqtk_rc_out = SEQTK_RC(ch_input)
@@ -38,13 +46,27 @@ workflow METABARCODING_WF {
     // - Trim the reads to the same length -> [reads length] minus [longest_primer] minus 5
     ch_cutadapt_out = CUTADAPT(ch_seqtk_rc_out)
         .map { meta, r1_trimmed, r2_trimmed, log ->
-            return [ meta, [r1_trimmed, r2_trimmed] ]
+            return [ meta, [r1_trimmed, r2_trimmed], log ]
         }
+    // - Gather cutadapt logs for multiQC reporting
+    ch_cutadapt_logs  = ch_cutadapt_out.map { meta, reads, log -> [ meta.dada2_run_id, log ] }
+    
+    ch_fastqc_trimmed = FASTQC_TRIMMED(
+        ch_cutadapt_out.flatMap { meta, reads, log ->
+        [
+            [ meta, reads[0], 'R1' ],
+            [ meta, reads[1], 'R2' ]
+        ]
+    }, 'trimmed')
+    // - Gather FastQC zips for multiQC reporting
+    ch_fastqc_trimmed_zips = ch_fastqc_trimmed.zips.map { meta, zip -> 
+        return [ meta.dada2_run_id, zip ]
+    }
 
     // - Regroup the reads according to their run id
     // - In Figaro, use the longest amplicon length if multiple amplicons were targeted in the same run
     ch_figaro_in = ch_cutadapt_out
-        .map { meta, reads ->
+        .map { meta, reads, log ->
             return [ meta.run_id, meta, reads ]
         }
         .groupTuple(by: 0)
@@ -66,7 +88,7 @@ workflow METABARCODING_WF {
         }
 
     ch_cutadapt_out_keyed = ch_cutadapt_out
-        .map { meta, fastqs -> 
+        .map { meta, fastqs, log -> 
             [ meta.run_id, [meta, fastqs] ] 
         }
     
@@ -103,7 +125,24 @@ workflow METABARCODING_WF {
         .set { ch_by_amplicon }
     
     
-    WF_16S(ch_by_amplicon.amplicon_16S.ifEmpty([]))
+    ch_processed_16s = WF_16S(ch_by_amplicon.amplicon_16S.ifEmpty([]))
+    
+    // - Gather FastQC zips for multiQC reporting
+    ch_fastqc_filt_zips = ch_processed_16s.ch_fastqc_filterandtrim.map { meta, zip -> 
+        return [ meta.dada2_run_id, zip ]
+    }
+    
+    
+    ch_multiqc_in = ch_fastqc_raw_zips
+        .mix(ch_fastqc_trimmed_zips)
+        .mix(ch_fastqc_filt_zips)
+        .mix(ch_cutadapt_logs)
+        .groupTuple()
+        .map { dada2_run_id, files ->
+            return [ dada2_run_id, files.flatten() ]
+        }
+
+    ch_multiqc_out = MULTIQC(ch_multiqc_in)
     //18S_WF(ch_cutadapt_figaro_out.amplicon_18S.ifEmpty([]))
     //16S18S_WF(ch_cutadapt_figaro_out.amplicon_16S18S.ifEmpty([]))
     //ITS_WF(ch_cutadapt_figaro_out.amplicon_ITS.ifEmpty([]))
@@ -124,6 +163,6 @@ workflow METABARCODING_WF {
 
 workflow {
 
-    METABARCODING_WF()
+    PATE()
 
 }
