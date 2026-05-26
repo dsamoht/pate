@@ -8,7 +8,7 @@ include { FIGARO                   } from './modules/figaro'
 include { MULTIQC                  } from './modules/multiqc'
 include { READ_TRACKER             } from './modules/tracker'
 include { SEQTK_RC                 } from './modules/seqtk/rc'
-include { WF_16S                   } from './workflows/wf_16S'
+include { WF_16S                   } from './workflows/wf_16s'
 
 
 workflow PATE {
