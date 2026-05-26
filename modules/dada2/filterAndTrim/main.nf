@@ -10,7 +10,8 @@ process DADA2_FILTERANDTRIM {
     tuple val(meta), path(reads, stageAs: "cutadapted/*")
 
     output:
-    tuple val(meta), path("*_filtered_and_trimmed", type: 'dir')
+    tuple val(meta), path("*_filtered_and_trimmed", type: 'dir'), emit: res_dir
+    tuple val(meta), path("*_filterAndTrim_log.rds"), emit: ft_log
 
     script:
     def filterAndTrimParameters = meta.figaro_params
@@ -18,5 +19,6 @@ process DADA2_FILTERANDTRIM {
     """
     dada2_filterAndTrim.R ${filterAndTrimParameters}
     mv filtered_and_trimmed ${dada2_run_id}_filtered_and_trimmed
+    mv filterAndTrim_log.rds ${dada2_run_id}_filterAndTrim_log.rds
     """
 }

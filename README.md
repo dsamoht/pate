@@ -1,11 +1,7 @@
 # __pate__  
 ## Pipeline for Amplicon data Treatment in microbial Ecology
 > [!NOTE]
-Each amplicon type has its own considerations. Their treatment must follow similar but different strategies. __pate__ now supports the following amplicons:  
-:white_check_mark: __16S__  
-:white_check_mark: __16S18S__ (universal primers)  
-:white_check_mark: __18S__    
-:white_check_mark: __ITS__  
+__pate__ is made for short reads metabarcoding. It runs [DADA2](https://github.com/benjjneb/dada2) as the core denoising algorithm. For reproducibility and efficiency purposes, filtering parameters are chosen automaticaly with [FIGARO](https://github.com/Zymo-Research/figaro).
 
 ## TL;DR
 ```

@@ -34,7 +34,7 @@ workflow WF_16S {
 
     ch_filterAndTrim_out = DADA2_FILTERANDTRIM(ch_dada2_in)
 
-    ch_filtered_for_fastqc = ch_filterAndTrim_out.flatMap { tuple ->
+    ch_filtered_for_fastqc = ch_filterAndTrim_out.res_dir.flatMap { tuple ->
         def meta = tuple[0]
         def dir  = tuple[1]
 
@@ -59,21 +59,21 @@ workflow WF_16S {
             r_meta.sample_name = sample_name
 
             return [
-                [ f_meta, f, 'R1' ],
-                [ r_meta, r, 'R2' ]
+                [ f_meta, f, 'filtered', 'R1' ],
+                [ r_meta, r, 'filtered', 'R2' ]
             ]
         }
     }
 
-    ch_fastqc_filtered = FASTQC_FILTERED(ch_filtered_for_fastqc, "filtered")
+    ch_fastqc_filtered = FASTQC_FILTERED(ch_filtered_for_fastqc)
 
-    ch_learnErrors_out = DADA2_LEARNERRORS(ch_filterAndTrim_out)
-    ch_dada_in = ch_filterAndTrim_out
+    ch_learnErrors_out = DADA2_LEARNERRORS(ch_filterAndTrim_out.res_dir)
+    ch_dada_in = ch_filterAndTrim_out.res_dir
         .join(ch_learnErrors_out.errF)
         .join(ch_learnErrors_out.errR)
     
     ch_dada_out = DADA2_DADA(ch_dada_in)
-    ch_mergePairs_in = ch_filterAndTrim_out
+    ch_mergePairs_in = ch_filterAndTrim_out.res_dir
         .join(ch_dada_out.dadaFs)
         .join(ch_dada_out.dadaRs)
     
@@ -82,7 +82,14 @@ workflow WF_16S {
     ch_removeBimeraDenovo_out = DADA2_REMOVEBIMERADENOVO(ch_makeSequenceTable_out)
 
     emit:
+
     ch_fastqc_filterandtrim = ch_fastqc_filtered.zips
+    ch_ft_log = ch_filterAndTrim_out.ft_log
+    ch_errF = ch_learnErrors_out.errF
+    ch_errR = ch_learnErrors_out.errR
+    ch_dadaFs = ch_dada_out.dadaFs
+    ch_dadaRs = ch_dada_out.dadaRs
+    ch_mergers = ch_mergePairs_out
     ch_seqtab_nochim = ch_removeBimeraDenovo_out
 
 }

@@ -19,11 +19,13 @@ filtRs <- file.path(".", "filtered_and_trimmed", paste0(sample_names, "_R_filt.f
 names(filtFs) <- sample_names
 names(filtRs) <- sample_names
 
-filterAndTrim(fnFs, filtFs, fnRs, filtRs,
-            truncLen=c(truncLen_fwd, truncLen_rev),
-            maxN=0,
-            maxEE=c(ee_fwd, ee_rev),
-            truncQ=2,
-            rm.phix=TRUE,
-            compress=TRUE,
-            multithread=TRUE)
+stdout <- filterAndTrim(fnFs, filtFs, fnRs, filtRs,
+                            truncLen=c(truncLen_fwd, truncLen_rev),
+                            maxN=0,
+                            maxEE=c(ee_fwd, ee_rev),
+                            truncQ=2,
+                            rm.phix=TRUE,
+                            compress=TRUE,
+                            multithread=TRUE)
+
+saveRDS(stdout, "filterAndTrim_log.rds")

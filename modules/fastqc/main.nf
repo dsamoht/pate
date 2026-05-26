@@ -7,8 +7,7 @@ process FASTQC {
     publishDir "${params.output}/fastqc/", mode: 'copy'
 
     input:
-    tuple val(meta), path(read), val(orientation)
-    val stage // 'raw', 'trimmed', 'filtered'
+    tuple val(meta), path(read), val(stage), val(orientation)
 
     output:
     tuple val(meta), path("*_fastqc.zip"), emit: zips
