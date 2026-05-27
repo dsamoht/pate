@@ -8,6 +8,7 @@ process MULTIQC {
 
     input:
     tuple val(meta), path(multiqc_files, stageAs: "?/*")
+    path(config)
 
     output:
     tuple val(meta), path("*.html"), emit: report
@@ -15,8 +16,7 @@ process MULTIQC {
 
     script:
     """
-    cp ${projectDir}/assets/* .
-    multiqc -c ./multiqc_config.yml .
+    multiqc -c ${config} .
     mv *.html multiqc_${meta}.html
     mv *_data multiqc_${meta}_data
     """

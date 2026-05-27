@@ -1,7 +1,7 @@
 # __pate__  
 ## Pipeline for Amplicon data Treatment in microbial Ecology
 > [!NOTE]
-__pate__ is made for short reads metabarcoding. It runs [DADA2](https://github.com/benjjneb/dada2) as the core denoising algorithm. For reproducibility and efficiency purposes, filtering parameters are chosen automaticaly with [FIGARO](https://github.com/Zymo-Research/figaro).
+__pate__ is made for short reads metabarcoding. It runs [DADA2](https://github.com/benjjneb/dada2) as the core denoising algorithm. For reproducibility and efficiency purposes, filtering parameters are chosen automatically with [FIGARO](https://github.com/Zymo-Research/figaro).
 
 ## TL;DR
 ```

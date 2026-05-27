@@ -142,7 +142,8 @@ workflow PATE {
             return [ dada2_run_id, files.flatten() ]
         }
 
-    ch_multiqc_out = MULTIQC(ch_multiqc_in)
+    ch_multiqc_config = channel.value(file("${projectDir}/assets/multiqc_config.yml"))
+    ch_multiqc_out = MULTIQC(ch_multiqc_in, ch_multiqc_config)
 
     // Group individual sample cutadapt logs by their dada2_run_id
     ch_cutadapt_run_logs = ch_cutadapt_logs
